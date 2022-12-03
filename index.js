@@ -12,10 +12,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/posts", (req, res) => {
-	res.json({
-		message: "Fetched",
-		info: posts,
-	});
+	res.json(posts);
 });
 
 app.post("/posts", (req, res) => {
