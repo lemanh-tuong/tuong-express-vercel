@@ -1,11 +1,9 @@
 const express = require("express");
 const fs = require("fs");
-const bodyParser = require("body-parser");
 const { v4 } = require("uuid");
 const app = express();
-const port = process.env.PORT || 49054;
 
-app.use(bodyParser.json());
+app.use(express.json({ extended: false }));
 
 app.get("/", (req, res) => {
 	res.send("Hello World!");
@@ -23,6 +21,5 @@ app.post("/posts", (req, res) => {
 	res.json(data);
 });
 
-app.listen(port, () => {
-	console.log(`Example app listening on port ${port}`);
-});
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => console.log(`Server is running in port ${PORT}`));
