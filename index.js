@@ -5,20 +5,34 @@ const app = express();
 
 app.use(express.json({ extended: false }));
 
+let posts = [];
+
 app.get("/", (req, res) => {
 	res.send("Hello World!");
 });
 
 app.get("/posts", (req, res) => {
-	const posts = JSON.parse(fs.readFileSync("./posts.json", "utf8"));
-	res.json(posts);
+	res.json({
+		message: "Fetched",
+		info: posts,
+	});
 });
 
 app.post("/posts", (req, res) => {
 	const data = { id: v4(), ...req.body };
-	const posts = JSON.parse(fs.readFileSync("./posts.json", "utf8")).concat(data);
-	fs.writeFileSync("./posts.json", JSON.stringify(posts, undefined, 2));
-	res.json(data);
+	posts.push(data);
+	res.json({
+		message: "Created",
+		info: data,
+	});
+});
+
+app.delete("/posts/:id", (req, res) => {
+	const { id } = req.params;
+	posts = posts.filter((post) => post.id !== id);
+	res.json({
+		message: "Deleted",
+	});
 });
 
 const PORT = process.env.PORT || 8080;
