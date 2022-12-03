@@ -3,7 +3,7 @@ const fs = require("fs");
 const bodyParser = require("body-parser");
 const { v4 } = require("uuid");
 const app = express();
-const port = 49054;
+const port = process.env.PORT || 49054;
 
 app.use(bodyParser.json());
 
